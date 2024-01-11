@@ -1,6 +1,8 @@
 spring:
   config:
     import: env.properties
+  profiles:
+    active: ${ACTIVE}
 
 api:
   version: /api/v1
@@ -8,12 +10,27 @@ api:
 server:
   port: ${PORT}
 
+jwt:
+  secret:
+    access: ${JWT_SECRET_ACCESS}
+    refresh: ${JWT_SECRET_REFRESH}
+  access:
+    leave:
+      minutes: ${JWT_ACCESS_LEAVE_MINUTES}
+  refresh:
+    leave:
+      days: ${JWT_REFRESH_LEAVE_DAYS}
+  authorization:
+    user:
+      field: username
+
 ---
 
 spring:
   config:
     activate:
       on-profile: dev
+    import: optional:secrets.properties[.properties]
   datasource:
     url: ${DEV_DB_URL}
     username: ${DEV_DB_USER}

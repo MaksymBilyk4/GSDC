@@ -1,10 +1,10 @@
 package com.gsdc.server.entity;
 
 
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 import java.util.UUID;
 
 @MappedSuperclass

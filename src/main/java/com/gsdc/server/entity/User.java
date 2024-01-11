@@ -1,15 +1,13 @@
 package com.gsdc.server.entity;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Objects;
 import java.util.Set;
 
 @Getter
@@ -29,7 +27,7 @@ public class User extends BaseEntity {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "father")
+    @OneToMany(mappedBy = "studentOwner")
     private Set<Student> students;
 
     @Override
@@ -40,5 +38,22 @@ public class User extends BaseEntity {
                 ", password='" + password + '\'' +
                 ", students=" + students +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        User user = new User();
+        if (this == obj) {
+            return true;
+        }
+        if (! (obj instanceof User)) {
+            return false;
+        }
+        return (Objects.equals(username, user.username) && Objects.equals(email, user.email));
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(username, email);
     }
 }
